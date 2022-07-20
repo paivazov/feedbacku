@@ -1,4 +1,4 @@
-.PHONY: up format
+.PHONY: up format typecheck format_check flake8 check format
 
 
 YAML_FILES := -f ./docker-compose.yml

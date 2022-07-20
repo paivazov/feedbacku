@@ -2,6 +2,7 @@
 db.sqlite3
 venv
 
+
 # Editor directories and files
 .idea
 .vscode
