@@ -51,8 +51,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # additional modules
     'rest_framework',
     'rest_framework_simplejwt',
+    # django apps
     'users.apps.UsersConfig',
 ]
 
@@ -90,7 +92,6 @@ WSGI_APPLICATION = 'FeedbackU.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 if DEVELOPMENT_MODE:
-
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
