@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 import sys
+from datetime import timedelta
 from pathlib import Path
 
 import dj_database_url
@@ -56,6 +57,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     # django apps
     'users.apps.UsersConfig',
+    'organisations.apps.OrganisationsConfig',
 ]
 
 MIDDLEWARE = [
@@ -163,4 +165,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
 }
