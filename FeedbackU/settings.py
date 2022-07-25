@@ -171,3 +171,24 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
 }
+
+# Celery config
+CELERY_BROKER_URL = os.environ.get("BROKER_URL", 'redis://localhost/0')
+CELERY_RESULT_BACKEND = os.environ.get("BROKER_URL", 'redis://localhost/1')
+
+if DEVELOPMENT_MODE:
+    EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+    EMAIL_FILE_PATH = BASE_DIR.parent.joinpath('var/emails/sent')
+    DEFAULT_FROM_EMAIL = None
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    # Configure it on production
+    EMAIL_HOST = ''
+    EMAIL_HOST_USER = ''
+    EMAIL_HOST_PASSWORD = ''
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    EMAIL_USE_SSl = False
+    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
