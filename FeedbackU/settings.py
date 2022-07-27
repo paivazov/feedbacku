@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 import sys
+from datetime import timedelta
 from pathlib import Path
 
 import dj_database_url
@@ -51,12 +52,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     # additional modules
     'rest_framework',
     'rest_framework_simplejwt',
     # django apps
     'users.apps.UsersConfig',
+    'organisations.apps.OrganisationsConfig',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -164,3 +169,27 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
+}
+
+# Celery config
+CELERY_BROKER_URL = os.environ.get("BROKER_URL", 'redis://localhost/0')
+CELERY_RESULT_BACKEND = os.environ.get("RESULT_BACKEND", 'redis://localhost/1')
+
+if DEVELOPMENT_MODE:
+    EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+    EMAIL_FILE_PATH = BASE_DIR.joinpath('var/emails/sent')
+    DEFAULT_FROM_EMAIL = "localhost@webmaster.com"
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    # Configure it on production
+    EMAIL_HOST = ''
+    EMAIL_HOST_USER = ''
+    EMAIL_HOST_PASSWORD = ''
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    EMAIL_USE_SSl = False
+    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
