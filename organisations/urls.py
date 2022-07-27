@@ -6,6 +6,6 @@ from organisations.views import (
 )
 
 urlpatterns = (
-    path("edit/", OrganisationConfigView.as_view()),
-    path("invite/", OrganisationInvitingView.as_view()),
+    path("edit/", OrganisationConfigView.as_view(), name="edit-organisation"),
+    path("invite/", OrganisationInvitingView.as_view(), name="invite-member"),
 )

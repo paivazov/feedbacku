@@ -1,7 +1,7 @@
 from uuid import uuid1
 
 from django.conf.global_settings import AUTH_USER_MODEL
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from organisations.models import Organisation

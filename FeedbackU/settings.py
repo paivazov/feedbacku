@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     # additional modules
     'rest_framework',
     'rest_framework_simplejwt',
@@ -59,6 +60,8 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'organisations.apps.OrganisationsConfig',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -174,12 +177,12 @@ SIMPLE_JWT = {
 
 # Celery config
 CELERY_BROKER_URL = os.environ.get("BROKER_URL", 'redis://localhost/0')
-CELERY_RESULT_BACKEND = os.environ.get("BROKER_URL", 'redis://localhost/1')
+CELERY_RESULT_BACKEND = os.environ.get("RESULT_BACKEND", 'redis://localhost/1')
 
 if DEVELOPMENT_MODE:
     EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-    EMAIL_FILE_PATH = BASE_DIR.parent.joinpath('var/emails/sent')
-    DEFAULT_FROM_EMAIL = None
+    EMAIL_FILE_PATH = BASE_DIR.joinpath('var/emails/sent')
+    DEFAULT_FROM_EMAIL = "localhost@webmaster.com"
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     # Configure it on production
@@ -190,5 +193,3 @@ else:
     EMAIL_USE_TLS = True
     EMAIL_USE_SSl = False
     DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
-

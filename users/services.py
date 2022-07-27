@@ -19,7 +19,7 @@ def check_password_match(attrs: dict) -> dict:
     return attrs
 
 
-def create_new_user(data: dict) -> User:
+def create_new_user(data: dict) -> User:  # type: ignore
     """Creates new user.
     Args:
         data: dictionary of Serialized data.

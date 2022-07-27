@@ -14,5 +14,10 @@ class IsSuperuser(BasePermission):
 
 @unique
 class InvitationStates(Enum):
+    """Defines two states of invitation.
+    After invitation created, state must be "created";
+    After user accept invitation, state must be "used".
+    """
+
     created = "c"
     used = "u"

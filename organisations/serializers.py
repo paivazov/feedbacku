@@ -1,4 +1,3 @@
-from django.db.models import Exists
 from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import ModelSerializer
 
@@ -13,9 +12,6 @@ class OrganisationConfigSerializer(ModelSerializer):
 
 class OrganisationInvitingSerializer(ModelSerializer):
     def validate(self, data):
-        """
-        Check that start is before finish.
-        """
         organisation = Organisation.objects.get(manager=self.context['user'])
         if not organisation:
             raise ValidationError(

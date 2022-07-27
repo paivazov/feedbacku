@@ -7,4 +7,4 @@ class UsersConfig(AppConfig):
 
     def ready(self):
         # the module is imported in order to initialize signals
-        import users.signals  # noqa: F401
+        import users.signal_handlers  # noqa: F401

@@ -1,6 +1,4 @@
 from rest_framework.generics import UpdateAPIView, CreateAPIView
-from rest_framework.mixins import UpdateModelMixin
-from rest_framework.views import APIView
 
 from organisations.models import Organisation
 from organisations.serializers import (
@@ -19,8 +17,6 @@ class OrganisationConfigView(UpdateAPIView):
 
 
 class OrganisationInvitingView(CreateAPIView):
-    """Need to implement sending link on email"""
-
     serializer_class = OrganisationInvitingSerializer
     permission_classes = (IsSuperuser,)
 

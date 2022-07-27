@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
-from rest_framework.exceptions import ValidationError
 from rest_framework.fields import EmailField, CharField
 from rest_framework.serializers import ModelSerializer
 from rest_framework.validators import UniqueValidator

@@ -15,6 +15,6 @@ urlpatterns = [
     path(
         'register/<uuid:invitation_id>/',
         RegistrationViaInvitationLinkView.as_view(),
-        name="register-via-invite",
+        name="register-via-invite-link",
     ),
 ]
