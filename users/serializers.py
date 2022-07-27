@@ -78,17 +78,3 @@ class RegistrationViaInvitationLinkSerializer(ModelSerializer):
 
     def validate(self, attrs):
         return check_password_match(attrs)
-
-    # def create(self, validated_data):
-    #     user = User.objects.create(
-    #         username=validated_data['email'],
-    #         email=validated_data['email'],
-    #         first_name=validated_data['first_name'],
-    #         last_name=validated_data['last_name'],
-    #         is_superuser=validated_data['is_superuser'],
-    #     )
-    #
-    #     user.set_password(validated_data['password'])
-    #     user.save()
-    #
-    #     return user
