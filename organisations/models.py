@@ -10,7 +10,7 @@ from django.db.models import (
     ManyToManyField,
     ForeignKey,
     UUIDField,
-    DateTimeField,
+    DateField,
 )
 
 from organisations.utils import InvitationStates
@@ -31,7 +31,7 @@ class Organisation(Model):
 class Invitation(Model):
     id = UUIDField(primary_key=True, default=uuid4, editable=False)
     email = EmailField()
-    created_at = DateTimeField(auto_now=True)
+    created_at = DateField(auto_now=True)
     state = CharField(max_length=15, default=InvitationStates.created.value)
     organisation = ForeignKey(Organisation, on_delete=CASCADE)
 
