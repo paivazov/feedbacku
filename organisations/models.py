@@ -25,7 +25,7 @@ class Organisation(Model):
     employees = ManyToManyField(User, related_name="many_users")
 
     def __str__(self):
-        return f"Organisation {self.name} which belongs to {self.manager}"
+        return f'"{self.name}" organisation which belongs to {self.manager}'
 
 
 class Invitation(Model):

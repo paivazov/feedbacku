@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model
-from django.db.models import Count
-from rest_framework.exceptions import ValidationError
+from django.shortcuts import get_object_or_404
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.fields import SerializerMethodField
-from rest_framework.serializers import ModelSerializer, ListSerializer
+from rest_framework.serializers import ModelSerializer
 
 from organisations.models import Organisation, Invitation
 
@@ -17,7 +17,20 @@ class OrganisationConfigSerializer(ModelSerializer):
 
 class OrganisationInvitingSerializer(ModelSerializer):
     def validate(self, data):
-        data["organisation_id"] = self.context.get("organisation_id")
+        organisation = get_object_or_404(
+            Organisation, pk=self.context.get("organisation_id")
+        )
+
+        # Permission check has been moved to serializer in order to
+        # Generic create views supports object-level restrictions only in
+        # serializers. See:
+        # https://www.django-rest-framework.org/api-guide/permissions/#overview-of-access-restriction-methods
+        if self.context.get("request").user != organisation.manager:
+            raise PermissionDenied(
+                "This action is allowed only to managers of this company."
+            )
+
+        data["organisation"] = organisation
         return data
 
     class Meta:
