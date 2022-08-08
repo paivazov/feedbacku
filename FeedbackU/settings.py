@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     # additional modules
     'rest_framework',
     'rest_framework_simplejwt',
+    'drf_yasg',
     # django apps
     'users.apps.UsersConfig',
     'organisations.apps.OrganisationsConfig',
