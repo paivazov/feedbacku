@@ -17,6 +17,8 @@ class OrganisationConfigSerializer(ModelSerializer):
 
 class OrganisationInvitingSerializer(ModelSerializer):
     def validate(self, data):
+        # refactor this.
+        # The same on feedbacks.serializers.FeedbackCreatingSerializer
         organisation = get_object_or_404(
             Organisation, pk=self.context.get("organisation_id")
         )
@@ -53,7 +55,6 @@ class OrganisationMembersSerializer(ModelSerializer):
 
 
 class OrganisationSerializer(ModelSerializer):
-
     quantity_of_employees = SerializerMethodField()
     manager = UserSerializer(read_only=True)
 

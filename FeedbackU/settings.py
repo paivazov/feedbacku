@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     # django apps
     'users.apps.UsersConfig',
     'organisations.apps.OrganisationsConfig',
+    'feedbacks.apps.FeedbacksConfig',
 ]
 
 SITE_ID = 1

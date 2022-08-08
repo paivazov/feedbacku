@@ -25,6 +25,7 @@ class OrganisationInvitingView(CreateAPIView):
     serializer_class = OrganisationInvitingSerializer
     permission_classes = (IsAuthenticated,)
 
+    # FeedbackCreatingView has the same method
     def get_serializer_context(self):
         context = super(
             OrganisationInvitingView, self
@@ -39,6 +40,7 @@ class OrganisationConfigView(UpdateAPIView):
     """Provides editing organisation name.
     Contact phone, email of company can be implemented later"""
 
+    queryset = Organisation.objects.all()
     permission_classes = (IsAuthenticated, IsManager)
     serializer_class = OrganisationConfigSerializer
 
@@ -46,9 +48,9 @@ class OrganisationConfigView(UpdateAPIView):
 class OrganisationMemberDeleteView(APIView):
     permission_classes = (IsAuthenticated, IsManager)
 
-    def delete(self, request, organisation_id, user_id):
+    def delete(self, request, pk, user_id):
         organisation = Organisation.objects.prefetch_related("employees").get(
-            pk=organisation_id
+            pk=pk
         )
         self.check_object_permissions(request, organisation)
         member = get_object_or_404(User, pk=user_id)

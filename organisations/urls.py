@@ -24,7 +24,7 @@ urlpatterns = (
         name="invite-member",
     ),
     path(
-        "<int:organisation_id>/users/<int:user_id>/",
+        "<int:pk>/users/<int:user_id>/",
         OrganisationMemberDeleteView.as_view(),
         name="delete-member",
     ),

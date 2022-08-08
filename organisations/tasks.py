@@ -16,7 +16,6 @@ def send_email(
     recipients: Union[list, tuple],
 ) -> None:
     """sends regular Django email using task queue"""
-    print("hello")
     send_mail(
         subject,
         message,
