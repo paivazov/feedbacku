@@ -7,8 +7,8 @@ from rest_framework.fields import Field, HiddenField
 from rest_framework.serializers import ModelSerializer, CurrentUserDefault
 
 from feedbacks.models import Feedback
+from users.models import UserLastFeedbackInfo
 from organisations.models import Organisation
-from users.models import UserInfo
 
 User = get_user_model()
 
@@ -86,5 +86,5 @@ class UserFeedbackSerializer(ModelSerializer):
 
 class UserInfoFeedbackSerializer(ModelSerializer):
     class Meta:
-        model = UserInfo
+        model = UserLastFeedbackInfo
         fields = ("last_feedback_written_at",)

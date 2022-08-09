@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from users.models import UserInfo
+from users.models import UserLastFeedbackInfo
 
-admin.site.register(UserInfo)
+admin.site.register(UserLastFeedbackInfo)

@@ -6,7 +6,7 @@ from django.dispatch import receiver
 
 from feedbacks.models import Feedback
 from organisations.models import Organisation
-from users.models import UserInfo
+from users.models import UserLastFeedbackInfo
 
 
 @receiver(post_save, sender=AUTH_USER_MODEL)
@@ -27,4 +27,6 @@ def update_last_written_feedback_date(**kwargs):
     (when user last time wrote feedback)"""
     feedback = kwargs['instance']
     if kwargs["created"]:
-        UserInfo.objects.update_or_create(user=feedback.sender)
+        UserLastFeedbackInfo.objects.update_or_create(
+            user=feedback.sender, organisation=feedback.organisation
+        )

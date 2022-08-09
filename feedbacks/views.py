@@ -15,7 +15,7 @@ from feedbacks.services import (
     make_senders_anonymous,
     get_object_or_none,
 )
-from users.models import UserInfo
+from users.models import UserLastFeedbackInfo
 
 
 class FeedbackCreatingView(CreateAPIView):
@@ -49,7 +49,9 @@ class CurrentUserFeedbackListView(APIView):
         make_senders_anonymous(queryset)
         feedbacks = UserFeedbackSerializer(queryset, many=True).data
         recipient_info = UserInfoFeedbackSerializer(
-            get_object_or_none(UserInfo, user_id=user_id)
+            get_object_or_none(
+                UserLastFeedbackInfo, user_id=user_id, organisation_id=pk
+            )
         ).data
         response = {
             "recipient_info": recipient_info,
