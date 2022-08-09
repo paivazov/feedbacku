@@ -44,5 +44,6 @@ urlpatterns = [
     ),
     path('admin/', admin.site.urls),
     path('', include('users.urls')),
-    path("organisation/", include('organisations.urls')),
+    path("organisations/", include('organisations.urls')),
+    path("organisations/<int:pk>/", include('feedbacks.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

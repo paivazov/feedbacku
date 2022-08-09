@@ -10,7 +10,7 @@ from django.db.models import (
     ManyToManyField,
     ForeignKey,
     UUIDField,
-    DateTimeField,
+    DateField,
 )
 
 from organisations.utils import InvitationStates
@@ -25,13 +25,13 @@ class Organisation(Model):
     employees = ManyToManyField(User, related_name="many_users")
 
     def __str__(self):
-        return f"Organisation {self.name} which belongs to {self.manager}"
+        return f'"{self.name}" organisation which belongs to {self.manager}'
 
 
 class Invitation(Model):
     id = UUIDField(primary_key=True, default=uuid4, editable=False)
     email = EmailField()
-    created_at = DateTimeField(auto_now=True)
+    created_at = DateField(auto_now=True)
     state = CharField(max_length=15, default=InvitationStates.created.value)
     organisation = ForeignKey(Organisation, on_delete=CASCADE)
 
