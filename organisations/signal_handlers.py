@@ -13,11 +13,16 @@ def send_invitation_mail(**kwargs):
     invitation = kwargs['instance']
     created = kwargs["created"]
 
+    if invitation.is_user_email_exists:
+        path = get_url_path('login-via-invite-link', (invitation.id,))
+    else:
+        path = get_url_path('register-via-invite-link', (invitation.id,))
+
     subject = "FeedbackU invitation"
     message = (
         f"Hello! You have been invited to {invitation.organisation.name}! \n"
         "To accept invitation, please follow this link: "
-        f"{get_url_path('register-via-invite-link', (invitation.id,))}"
+        f"{path}"
     )
     if created:
         send_email.delay(

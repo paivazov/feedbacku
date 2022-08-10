@@ -11,6 +11,7 @@ from django.db.models import (
     ForeignKey,
     UUIDField,
     DateField,
+    BooleanField,
 )
 
 from organisations.utils import InvitationStates
@@ -22,7 +23,7 @@ class Organisation(Model):
     # manager can add itself to employees. Must be fixed
     name = CharField(max_length=120)
     manager = OneToOneField(User, on_delete=CASCADE)
-    employees = ManyToManyField(User, related_name="many_users")
+    employees = ManyToManyField(User, related_name="many_users", blank=True)
 
     def __str__(self):
         return f'"{self.name}" organisation which belongs to {self.manager}'
@@ -31,6 +32,7 @@ class Organisation(Model):
 class Invitation(Model):
     id = UUIDField(primary_key=True, default=uuid4, editable=False)
     email = EmailField()
+    is_user_email_exists = BooleanField(default=False)
     created_at = DateField(auto_now=True)
     state = CharField(max_length=15, default=InvitationStates.created.value)
     organisation = ForeignKey(Organisation, on_delete=CASCADE)
