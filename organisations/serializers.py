@@ -33,7 +33,7 @@ class OrganisationInvitingSerializer(ModelSerializer):
                 "This action is allowed only to managers of this company."
             )
 
-        # checks if user with this email has been registered
+        # checks if user with this email has been registered earlier
         user = get_object_or_none(User, email=data.get("email"))
         if user:
             data["is_user_email_exists"] = True
