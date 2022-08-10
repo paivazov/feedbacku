@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from rest_framework.fields import EmailField, CharField
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, Serializer
 from rest_framework.validators import UniqueValidator
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -54,7 +54,7 @@ class RegisterSerializer(ModelSerializer):
         return check_password_match(attrs)
 
     def create(self, validated_data):
-        return create_new_user(validated_data)
+        return create_new_user(**validated_data)
 
 
 class RegistrationViaInvitationLinkSerializer(ModelSerializer):
@@ -78,3 +78,14 @@ class RegistrationViaInvitationLinkSerializer(ModelSerializer):
 
     def validate(self, attrs):
         return check_password_match(attrs)
+
+
+class LoginViaInvitationLinkSerializer(Serializer):
+    email = EmailField()
+    password = CharField()
+
+    class Meta:
+        extra_kwargs = {
+            'email': {'required': True, 'write_only': True},
+            'password': {'required': True, 'write_only': True},
+        }

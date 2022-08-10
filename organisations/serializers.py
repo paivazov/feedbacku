@@ -4,6 +4,7 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.fields import SerializerMethodField
 from rest_framework.serializers import ModelSerializer
 
+from feedbacks.services import get_object_or_none
 from organisations.models import Organisation, Invitation
 
 User = get_user_model()
@@ -31,6 +32,13 @@ class OrganisationInvitingSerializer(ModelSerializer):
             raise PermissionDenied(
                 "This action is allowed only to managers of this company."
             )
+
+        # checks if user with this email has been registered earlier
+        user = get_object_or_none(User, email=data.get("email"))
+        if user:
+            data["is_user_email_exists"] = True
+        else:
+            data["is_user_email_exists"] = False
 
         data["organisation"] = organisation
         return data
