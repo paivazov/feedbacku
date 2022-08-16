@@ -4,7 +4,7 @@ ___
 
 ### Clone project from git repository
 ```shell
-git clone https://github.com/ITA-Dnipro/Dp-Retraining-Python.git
+git clone https://github.com/paivazov/feedbacku.git
 ```
 
 ### Setup env files
