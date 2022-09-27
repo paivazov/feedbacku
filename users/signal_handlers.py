@@ -1,21 +1,20 @@
 from uuid import uuid1
 
-from django.conf.global_settings import AUTH_USER_MODEL
+from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from feedbacks.models import Feedback
+from feedbacks.models import Feedback, UserLastFeedbackInfo
 from organisations.models import Organisation
-from users.models import UserLastFeedbackInfo
 
 
-@receiver(post_save, sender=AUTH_USER_MODEL)
-def create_organisation_if_superuser(**kwargs):
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_organisation_if_organisation_lead(**kwargs):
     """Handler that creates new organisation if newly created User
-    is manager"""
+    is organisation lead"""
     user = kwargs['instance']
     created = kwargs["created"]
-    if created and user.is_superuser:
+    if created and user.is_organisation_lead:
         Organisation.objects.create(
             manager=user, name=f"organisation {uuid1()}"
         )

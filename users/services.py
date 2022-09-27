@@ -37,11 +37,10 @@ def create_new_user(**kwargs) -> User:  # type: ignore
         Newly created User object.
     """
     user = User.objects.create(
-        username=kwargs.get("email"),
         email=kwargs.get("email"),
         first_name=kwargs.get("first_name"),
         last_name=kwargs.get("last_name"),
-        is_superuser=kwargs.get("is_superuser", False),
+        is_organisation_lead=kwargs.get("is_organisation_lead"),
     )
 
     user.set_password(kwargs.get("password"))
@@ -50,14 +49,15 @@ def create_new_user(**kwargs) -> User:  # type: ignore
 
 
 class InviteLinkEndpointMixin:
-    def _get_user_token(self, user):
+    @staticmethod
+    def _get_user_token(user):
         # weird but this is in official docs
         # https://django-rest-framework-simplejwt.readthedocs.io/en/latest/creating_tokens_manually.html
         refresh = RefreshToken.for_user(user)
         return str(refresh.access_token), str(refresh)
 
+    @staticmethod
     def get_invitation_and_check_if_valid(
-        self,
         invitation_id: UUID,
     ) -> Union[Invitation, Response]:
         """Searches invitation and returns it if it's not used.
@@ -75,8 +75,9 @@ class InviteLinkEndpointMixin:
             )
         return invitation
 
+    @staticmethod
     def add_user_to_organisation(
-        self, invitation: Invitation, user: User  # type: ignore
+        invitation: Invitation, user: User  # type: ignore
     ) -> None:
         """Adds user to organisation which was in invitation
         and marks invitation as 'used'."""
