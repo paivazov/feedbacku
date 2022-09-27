@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model
+from django.conf import settings
 from django.db.models import (
     Model,
     PositiveSmallIntegerField,
@@ -11,8 +11,6 @@ from django.db.models import (
 )
 
 from organisations.models import Organisation
-
-User = get_user_model()
 
 
 class Feedback(Model):
@@ -28,12 +26,25 @@ class Feedback(Model):
     message = TextField(blank=True)
     created_at = DateTimeField(auto_now=True)
     organisation = ForeignKey(Organisation, on_delete=CASCADE)
-    sender = ForeignKey(User, on_delete=CASCADE, related_name="sender")
+    sender = ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=CASCADE, related_name="sender"
+    )
     recipient = ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=CASCADE,
         related_name="recipient",
     )
 
     def __str__(self):
         return f"{self.stars_amount} stars to {self.recipient.first_name}"
+
+
+class UserLastFeedbackInfo(Model):
+    user = ForeignKey(settings.AUTH_USER_MODEL, on_delete=CASCADE)
+    organisation = ForeignKey(Organisation, on_delete=CASCADE)
+    last_feedback_written_at = DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return (
+            f"Additional info about {self.user.get_full_name()} last feedback"
+        )

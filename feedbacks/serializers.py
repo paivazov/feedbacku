@@ -6,8 +6,7 @@ from rest_framework.exceptions import PermissionDenied, ValidationError
 from rest_framework.fields import Field, HiddenField
 from rest_framework.serializers import ModelSerializer, CurrentUserDefault
 
-from feedbacks.models import Feedback
-from users.models import UserLastFeedbackInfo
+from feedbacks.models import Feedback, UserLastFeedbackInfo
 from organisations.models import Organisation
 
 User = get_user_model()

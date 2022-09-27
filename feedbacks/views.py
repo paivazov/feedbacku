@@ -15,7 +15,7 @@ from feedbacks.services import (
     make_senders_anonymous,
     get_object_or_none,
 )
-from users.models import UserLastFeedbackInfo
+from feedbacks.models import UserLastFeedbackInfo
 
 
 class FeedbackCreatingView(CreateAPIView):

@@ -22,8 +22,8 @@ User = get_user_model()
 class OrganisationInvitingView(CreateAPIView):
     """Creates invitation."""
 
+    # Permissions of this endpoint are in serializer
     serializer_class = OrganisationInvitingSerializer
-    permission_classes = (IsAuthenticated,)
 
     # FeedbackCreatingView has the same method
     def get_serializer_context(self):

@@ -1,6 +1,8 @@
 from uuid import uuid4
 
-from django.contrib.auth import get_user_model
+from django.conf import settings
+
+# from django.contrib.auth import get_user_model
 from django.db.models import (
     Model,
     EmailField,
@@ -16,14 +18,16 @@ from django.db.models import (
 
 from organisations.utils import InvitationStates
 
-User = get_user_model()
+# User = get_user_model()
 
 
 class Organisation(Model):
     # manager can add itself to employees. Must be fixed
     name = CharField(max_length=120)
-    manager = OneToOneField(User, on_delete=CASCADE)
-    employees = ManyToManyField(User, related_name="many_users", blank=True)
+    manager = OneToOneField(settings.AUTH_USER_MODEL, on_delete=CASCADE)
+    employees = ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name="many_users", blank=True
+    )
 
     def __str__(self):
         return f'"{self.name}" organisation which belongs to {self.manager}'

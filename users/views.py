@@ -34,6 +34,8 @@ class RegisterView(CreateAPIView):
 
 
 class RegistrationViaInviteLinkView(APIView, InviteLinkEndpointMixin):
+    permission_classes = (AllowAny,)
+
     def post(self, request, invitation_id):
         invitation = self.get_invitation_and_check_if_valid(invitation_id)
         serializer = RegistrationViaInvitationLinkSerializer(
@@ -56,6 +58,8 @@ class RegistrationViaInviteLinkView(APIView, InviteLinkEndpointMixin):
 
 
 class LoginViaInviteLink(APIView, InviteLinkEndpointMixin):
+    permission_classes = (AllowAny,)
+
     def post(self, request, invitation_id):
         serializer = LoginViaInvitationLinkSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
