@@ -25,7 +25,6 @@ class Feedback(Model):
     stars_amount = PositiveSmallIntegerField(choices=StarsRange.choices)
     message = TextField(blank=True)
     created_at = DateTimeField(auto_now=True)
-    organisation = ForeignKey(Organisation, on_delete=CASCADE)
     sender = ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=CASCADE, related_name="sender"
     )
@@ -34,6 +33,8 @@ class Feedback(Model):
         on_delete=CASCADE,
         related_name="recipient",
     )
+
+    organisation = ForeignKey(Organisation, on_delete=CASCADE)
 
     def __str__(self):
         return f"{self.stars_amount} stars to {self.recipient.first_name}"
